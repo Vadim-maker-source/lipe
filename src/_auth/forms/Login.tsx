@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../lib/appwrite/api";
 
 const Login: React.FC = () => {
@@ -44,7 +44,7 @@ const Login: React.FC = () => {
         <button type="submit">Войти</button>
       </form>
       <p>
-        Нет аккаунта? <a href="/sign-up">Зарегистрируйтесь</a>
+        Нет аккаунта? <Link to="/sign-up">Зарегистрируйтесь</Link>
       </p>
     </div>
   );
