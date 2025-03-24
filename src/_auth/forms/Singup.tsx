@@ -21,12 +21,10 @@ const Signup: React.FC = () => {
 
   const navigate = useNavigate();
 
-  // Генерация 6-значного кода
   const generateVerificationCode = (): string => {
     return Math.floor(100000 + Math.random() * 900000).toString();
   };
 
-  // Отправка кода на email
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -35,7 +33,6 @@ const Signup: React.FC = () => {
     setIsCodeSent(true);
 
     if (form.current) {
-      // Добавляем скрытое поле для кода в форму
       const codeInput = document.createElement("input");
       codeInput.type = "hidden";
       codeInput.name = "code";
@@ -44,10 +41,10 @@ const Signup: React.FC = () => {
 
       emailjs
         .sendForm(
-          'service_fskg92u', // ID сервиса
-          'template_8o6bhn7', // ID шаблона
-          form.current, // Форма
-          'btSPvhQQNmoRrd_TS' // User ID
+          'service_fskg92u',
+          'template_8o6bhn7',
+          form.current,
+          'btSPvhQQNmoRrd_TS'
         )
         .then(
           (result) => {
@@ -64,8 +61,6 @@ const Signup: React.FC = () => {
             }
           }
         );
-
-      // Удаляем добавленное поле после отправки
       form.current.removeChild(codeInput);
     }
   };
@@ -74,19 +69,15 @@ const Signup: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Проверка, был ли отправлен код
     if (!isCodeSent) {
       setError("Пожалуйста, отправьте код подтверждения.");
       return;
     }
-
-    // Проверка, введен ли код
     if (!userCode) {
       setError("Пожалуйста, введите код подтверждения.");
       return;
     }
 
-    // Проверка, совпадает ли введенный код с отправленным
     if (userCode === verificationCode) {
       try {
         await registerUser(user);
@@ -155,7 +146,6 @@ const Signup: React.FC = () => {
         <button type="submit">Зарегистрироваться</button>
       </form>
 
-      {/* Форма для отправки кода */}
       <form ref={form} onSubmit={sendEmail}>
         <div>
           <label>Email для отправки кода:</label>

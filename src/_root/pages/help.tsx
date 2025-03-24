@@ -15,7 +15,8 @@ const Help = () => {
   const [lastSentTime, setLastSentTime] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState<number>(0);
 
-  const [user, setUser] = useState<User | null>(null); // Типизация пользователя
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,7 +80,11 @@ const Help = () => {
           setTimeLeft(24 * 60 * 60 * 1000);
         }, (error) => {
           console.log(error.text);
-          setNotification('Ошибка при отправке сообщения.');
+          if (error.status === 412) {
+            setError("Невозможно отправить код более 3 раз в день.");
+          } else {
+            setNotification('Ошибка при отправке кода.');
+          }
         });
     }
   };
@@ -94,6 +99,7 @@ const Help = () => {
 
   return (
     <div className="container">
+      {error && <p>{error}</p>}
       {lastSentTime ? (
         <div>Вы уже отправили сообщение. Пожалуйста, подождите.</div>
       ) : (
@@ -104,16 +110,16 @@ const Help = () => {
       <form ref={form} onSubmit={sendEmail} className="form">
         <label className="label">Имя</label>
         {user ? (
-        <textarea name="user_email" required className="input" value={user.name} style={{ willChange: 'none', resize: 'none', cursor: "revert" }}></textarea>
+        <textarea name="user_email" required className="textarea" value={user.name} style={{ willChange: 'none', resize: 'none', cursor: "revert" }}></textarea>
         ) : (
-          <textarea name="user_email" required className="input"></textarea>
+          <textarea name="user_email" required className="textarea"></textarea>
         )
         }
         <label className="label">Email</label>
         {user ? (
-        <textarea name="email" required className="input" value={user.email} style={{ willChange: 'none', resize: 'none', cursor: "revert" }}></textarea>
+        <textarea name="email" required className="textarea" value={user.email} style={{ willChange: 'none', resize: 'none', cursor: "revert" }}></textarea>
         ) : (
-          <textarea name="user_email" required className="input"></textarea>
+          <textarea name="user_email" required className="textarea"></textarea>
         )
         }
         <label className="label">Сообщение</label>
