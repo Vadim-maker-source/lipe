@@ -41,8 +41,8 @@ const Signup: React.FC = () => {
 
       emailjs
         .sendForm(
-          'service_fskg92u',
-          'template_8o6bhn7',
+          'service_bm1zi3k',
+          'template_wu3prna',
           form.current,
           'btSPvhQQNmoRrd_TS'
         )
@@ -147,7 +147,7 @@ const Signup: React.FC = () => {
       </form>
 
       <form ref={form} onSubmit={sendEmail}>
-        <div>
+        <div style={{ display: 'none' }}>
           <label>Email для отправки кода:</label>
           <input
             type="email"
