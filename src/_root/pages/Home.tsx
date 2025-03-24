@@ -36,7 +36,7 @@ const Home = () => {
 
   return (
     <div className="main-container">
-      <img src="/src/mainImage.png" alt="background" />
+      <img src="/assets/mainImage.png" alt="background" />
       <div className="list">
         <div className="list-group">
           <Link to="/monuments">

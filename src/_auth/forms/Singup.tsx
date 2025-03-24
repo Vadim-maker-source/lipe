@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { User } from "../../lib/appwrite/types";
 import { registerUser } from "../../lib/appwrite/api";
 import emailjs from 'emailjs-com';
@@ -173,7 +173,7 @@ const Signup: React.FC = () => {
       </form>
 
       <p>
-        Уже есть аккаунт?&nbsp;&nbsp;<a href="/sign-in">Войдите</a>
+        Уже есть аккаунт?&nbsp;&nbsp;<Link to="/sign-in">Войдите</Link>
       </p>
     </div>
   );
