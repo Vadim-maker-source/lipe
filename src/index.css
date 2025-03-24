@@ -446,6 +446,11 @@ li img{
 }
 
 @media (max-width: 900px) {
+    li{
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: 0fr 0fr;
+    }
     li img{
         height: 200px;
         width: 300px;
@@ -1322,15 +1327,41 @@ li img{
     padding: 30px;
     background: #ccccccda;
     border-radius: 15px;
+    overflow-y: auto;
     z-index: 5;
+    max-height: 90vh; /* Ограничиваем максимальную высоту */
+    width: 90%; /* Делаем ширину адаптивной */
+    max-width: 400px; /* Но не шире 400px */
+}
+
+/* Медиа-запрос для очень маленьких устройств */
+@media (max-height: 600px) {
+    .sign-main {
+        top: 0;
+        transform: translate(-50%, 20px);
+        max-height: calc(100vh - 40px);
+    }
+}
+
+@media (max-width: 480px) {
+    .sign-main form div input {
+        width: 100%; /* Делаем поля ввода адаптивными */
+        box-sizing: border-box; /* Учитываем padding в ширине */
+    }
+    
+    .sign-main form button {
+        width: 100%; /* Кнопки тоже на всю ширину */
+    }
 }
 
 .sign-main form{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%; /* Занимаем всю доступную ширину */
 }
 
+/* Остальные стили остаются без изменений */
 .sign-main form button{
     padding: 15px;
     width: 300px;
@@ -1361,6 +1392,7 @@ li img{
     margin-bottom: 25px;
     display: flex;
     flex-direction: column;
+    width: 100%; /* Занимаем всю доступную ширину */
 }
 
 .sign-main form div label{
