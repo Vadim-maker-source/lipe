@@ -11,6 +11,7 @@ const Signup: React.FC = () => {
   const [userCode, setUserCode] = useState<string>("");
   const [isCodeSent, setIsCodeSent] = useState<boolean>(false);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [user, setUser] = useState<User>({
     name: "",
@@ -25,77 +26,88 @@ const Signup: React.FC = () => {
     return Math.floor(100000 + Math.random() * 900000).toString();
   };
 
-  const sendEmail = (e: React.FormEvent) => {
+  const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    setNotification(null);
+
+    if (!user.email) {
+      setError("Пожалуйста, введите email");
+      setIsLoading(false);
+      return;
+    }
 
     const code = generateVerificationCode();
     setVerificationCode(code);
     setIsCodeSent(true);
 
-    if (form.current) {
-      const codeInput = document.createElement("input");
-      codeInput.type = "hidden";
-      codeInput.name = "code";
-      codeInput.value = code;
-      form.current.appendChild(codeInput);
+    try {
+      const templateParams = {
+        to_email: user.email,
+        user_name: user.name,
+        verification_code: code
+      };
 
-      emailjs
-        .sendForm(
-          'service_bm1zi3k',
-          'template_wu3prna',
-          form.current,
-          'btSPvhQQNmoRrd_TS'
-        )
-        .then(
-          (result) => {
-            console.log(result.text);
-            setNotification('Код успешно отправлен на вашу почту!');
-            form.current?.reset();
-          },
-          (error) => {
-            console.log(error.text);
-            if (error.status === 412) {
-              setError("Невозможно отправить код более 3 раз в день.");
-            } else {
-              setNotification('Ошибка при отправке кода.');
-            }
-          }
-        );
-      form.current.removeChild(codeInput);
+      await emailjs.send(
+        'service_bm1zi3k', // Замените на ваш Service ID
+        'template_wu3prna', // Замените на ваш Template ID
+        templateParams,
+        'btSPvhQQNmoRrd_TS' // Замените на ваш Public Key
+      );
+
+      setNotification('Код подтверждения отправлен на вашу почту!');
+    } catch (error) {
+      console.error('Ошибка отправки кода:', error);
+    
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Обработка регистрации
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    setNotification(null);
 
     if (!isCodeSent) {
-      setError("Пожалуйста, отправьте код подтверждения.");
-      return;
-    }
-    if (!userCode) {
-      setError("Пожалуйста, введите код подтверждения.");
+      setError("Сначала отправьте код подтверждения");
+      setIsLoading(false);
       return;
     }
 
-    if (userCode === verificationCode) {
-      try {
-        await registerUser(user);
-        navigate("/sign-in");
-      } catch (error) {
-        setError("Ошибка при регистрации");
-      }
-    } else {
+    if (!userCode) {
+      setError("Введите код подтверждения");
+      setIsLoading(false);
+      return;
+    }
+
+    if (userCode !== verificationCode) {
       setError("Неверный код подтверждения");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      await registerUser(user);
+      navigate("/sign-in");
+    } catch (error) {
+      console.error('Ошибка регистрации:', error);
+      setError("Ошибка регистрации. Проверьте данные.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="sign-main">
       <img src="/assets/logo.svg" alt="logo" />
-      {error && <p>{error}</p>}
-      {notification && <p>{notification}</p>}
-      <form onSubmit={handleSubmit}>
+      
+      {error && <div className="error-message">{error}</div>}
+      {notification && <div className="success-message">{notification}</div>}
+      
+      <form ref={form} onSubmit={handleSubmit}>
         <div>
           <label>Имя:</label>
           <input
@@ -103,8 +115,10 @@ const Signup: React.FC = () => {
             value={user.name}
             onChange={(e) => setUser({ ...user, name: e.target.value })}
             required
+            disabled={isLoading}
           />
         </div>
+        
         <div>
           <label>Почта:</label>
           <input
@@ -112,8 +126,10 @@ const Signup: React.FC = () => {
             value={user.email}
             onChange={(e) => setUser({ ...user, email: e.target.value })}
             required
+            disabled={isLoading}
           />
         </div>
+        
         <div>
           <label>Пароль:</label>
           <input
@@ -121,17 +137,21 @@ const Signup: React.FC = () => {
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
             required
+            disabled={isLoading}
           />
         </div>
+        
         <div>
           <label>Возраст:</label>
           <input
             type="number"
             value={user.age}
-            onChange={(e) => setUser({ ...user, age: parseInt(e.target.value) })}
+            onChange={(e) => setUser({ ...user, age: parseInt(e.target.value) || 0 })}
             required
+            disabled={isLoading}
           />
         </div>
+        
         <div>
           <label>Код подтверждения:</label>
           <input
@@ -141,25 +161,20 @@ const Signup: React.FC = () => {
             onChange={(e) => setUserCode(e.target.value)}
             placeholder="Введите 6-значный код"
             required
+            disabled={isLoading || !isCodeSent}
           />
+          <button 
+            type="button" 
+            onClick={sendEmail}
+            disabled={isLoading || !user.email}
+          >
+            {isLoading ? "Отправка..." : "Отправить код"}
+          </button>
         </div>
-        <button type="submit">Зарегистрироваться</button>
-      </form>
-
-      <form ref={form} onSubmit={sendEmail}>
-        <div style={{ display: 'none' }}>
-          <label>Email для отправки кода:</label>
-          <input
-            type="email"
-            name="to_email"
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-            required
-          />
-        </div>
-        <div>
-          <button type="submit">Отправить код</button>
-        </div>
+        
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Регистрация..." : "Зарегистрироваться"}
+        </button>
       </form>
 
       <p>
