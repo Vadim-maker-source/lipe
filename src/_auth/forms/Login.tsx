@@ -46,6 +46,9 @@ const Login: React.FC = () => {
       <p>
         Нет аккаунта? <Link to="/sign-up">Зарегистрируйтесь</Link>
       </p>
+      <p>
+        Войти <Link to="/">без регистрации</Link>
+      </p>
     </div>
   );
 };

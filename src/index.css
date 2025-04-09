@@ -1403,7 +1403,9 @@ li img{
     margin-bottom: 25px;
     display: flex;
     flex-direction: column;
-    width: 100%; /* Занимаем всю доступную ширину */
+    align-items: center;
+    gap: 10px;
+    width: 100%;
 }
 
 .sign-main form div label{
@@ -1471,4 +1473,13 @@ li img{
         flex-direction: column;
         align-items: center;
     }
+}
+
+
+
+
+.code-cont{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }

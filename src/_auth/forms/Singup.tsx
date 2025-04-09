@@ -152,7 +152,7 @@ const Signup: React.FC = () => {
           />
         </div>
         
-        <div>
+        <div className="code-cont">
           <label>Код подтверждения:</label>
           <input
             type="text"
@@ -179,6 +179,9 @@ const Signup: React.FC = () => {
 
       <p>
         Уже есть аккаунт?&nbsp;&nbsp;<Link to="/sign-in">Войдите</Link>
+      </p>
+      <p>
+        Войти <Link to="/">без регистрации</Link>
       </p>
     </div>
   );

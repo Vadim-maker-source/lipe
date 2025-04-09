@@ -23,10 +23,10 @@ const AttractionDetailsPage: React.FC = () => {
   const [otzivi, setOtzivi] = useState<Otziv[]>([]);
   const [newOtziv, setNewOtziv] = useState<Otziv & { imageFile?: File }>({
     attractionId: id || '',
-    username: '', // Имя пользователя будет добавлено автоматически
+    username: '',
     text: '',
     rating: 5,
-    imageFile: undefined, // Новое поле для файла
+    imageFile: undefined,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -34,10 +34,9 @@ const AttractionDetailsPage: React.FC = () => {
     const fetchUser = async () => {
       try {
         const user = await account.get();
-        setUser(user as User); // Приводим тип к User
+        setUser(user as User);
       } catch (error) {
         setUser(null);
-        navigate('/sign-in'); // Перенаправляем на страницу входа, если пользователь не авторизован
       }
     };
 
@@ -81,7 +80,6 @@ const AttractionDetailsPage: React.FC = () => {
       return;
     }
 
-    // Проверяем, что пользователь авторизован
     if (!user) {
       alert('Пользователь не авторизован');
       return;
@@ -89,26 +87,24 @@ const AttractionDetailsPage: React.FC = () => {
 
     try {
       let imageUrl = '';
-      // Если изображение выбрано, загружаем его в Appwrite Storage
       if (newOtziv.imageFile) {
         const file = await storage.createFile(
-          appwriteConfig.storageId, // Замените на ID вашего бакета
-          'unique()', // Уникальный ID файла
+          appwriteConfig.storageId,
+          'unique()', 
           newOtziv.imageFile
         );
         imageUrl = `https://cloud.appwrite.io/v1/storage/buckets/67d855c50035f5157685/files/${file.$id}/view?project=67d6b2d0000e2a3e019e`;
       }
 
-      // Добавляем отзыв с изображением (если есть)
       await addOtziv({
         ...newOtziv,
-        username: user.name, // Добавляем имя пользователя
-        imageUrl, // Добавляем ссылку на изображение
+        username: user.name,
+        imageUrl,
       });
 
       alert('Отзыв успешно добавлен!');
       setNewOtziv({ ...newOtziv, text: '', imageFile: undefined });
-      setIsModalOpen(false); // Закрываем модальное окно
+      setIsModalOpen(false);
       if (id) {
         loadOtzivi(id);
       }
@@ -118,21 +114,19 @@ const AttractionDetailsPage: React.FC = () => {
     }
   };
 
-  // Функция для отображения звёзд
   const renderStars = (rating: number) => {
-    return '⭐'.repeat(Math.round(rating)); // Округляем рейтинг до целого числа
+    return '⭐'.repeat(Math.round(rating));
   };
 
-  // Функция для вычисления среднего рейтинга
   const calculateAverageRating = (otzivi: Otziv[]) => {
     if (otzivi.length === 0) return 0;
 
     const totalRating = otzivi.reduce((sum, otziv) => sum + otziv.rating, 0);
     const averageRating = totalRating / otzivi.length;
-    return Math.round(averageRating * 10) / 10; // Округляем до одного знака после запятой
+    return Math.round(averageRating * 10) / 10;
   };
 
-  const averageRating = calculateAverageRating(otzivi); // Вычисляем средний рейтинг
+  const averageRating = calculateAverageRating(otzivi);
 
   if (!attraction) {
     return <div>Достопримечательность не найдена</div>;
@@ -240,7 +234,7 @@ const AttractionDetailsPage: React.FC = () => {
                 if (e.target.files && e.target.files[0]) {
                   const file = e.target.files[0];
                   setNewOtziv({ ...newOtziv, imageFile: file });
-                  setPreviewImageUrl(URL.createObjectURL(file)); // Устанавливаем превью
+                  setPreviewImageUrl(URL.createObjectURL(file));
                 }
               }}
             />
@@ -253,7 +247,7 @@ const AttractionDetailsPage: React.FC = () => {
             type="button"
             onClick={() => {
               setIsModalOpen(false);
-              setPreviewImageUrl(null); // Очищаем превью
+              setPreviewImageUrl(null);
             }}
             className="close-button"
           >
@@ -274,7 +268,6 @@ const AttractionDetailsPage: React.FC = () => {
               <span><h2>Отзыв:</h2> <p>{otziv.text}</p></span>
               {otziv.imageUrl && (
                 <div>
-                  {/* <span><h2>Изображение:</h2></span> */}
                   <img src={otziv.imageUrl} alt="Отзыв" style={{ width: '50%', height: '40%', borderRadius: '30px' }} />
                 </div>
               )}
@@ -289,8 +282,9 @@ const AttractionDetailsPage: React.FC = () => {
           <button
             onClick={() => {
               if (!user) {
-                alert('Пожалуйста, войдите в систему, чтобы оставить отзыв');
+                if(confirm('Пожалуйста, войдите в систему, чтобы оставить отзыв')){
                 navigate('/sign-in');
+                }
               } else {
                 setIsModalOpen(true);
               }

@@ -28,7 +28,6 @@ const Topbar: React.FC<TopbarProps> = ({ searchQuery, setSearchQuery }) => {
         setUser(user as User); // Приводим тип к User
       } catch (error) {
         setUser(null);
-        navigate('/sign-in'); // Перенаправляем на страницу входа, если пользователь не авторизован
       }
     };
 
@@ -40,7 +39,6 @@ const Topbar: React.FC<TopbarProps> = ({ searchQuery, setSearchQuery }) => {
     try {
       await account.deleteSession('current');
       setUser(null);
-      navigate('/sign-in'); // Перенаправляем на страницу входа после выхода
     } catch (error) {
       console.error('Ошибка при выходе:', error);
     }
