@@ -506,8 +506,7 @@ li img{
 
 .map{
     margin-top: 150px;
-    display: grid;
-    grid-template-columns: 1fr 5fr;
+    display: flex;
     align-items: center;
 }
 
@@ -521,21 +520,23 @@ li img{
     background: #314535;
 }
 
-@media screen and (max-height: 980px) {
+@media screen and (max-width: 800px) {
     .map{
-        margin-top: 400px;
+        flex-direction: column;
+        position: relative;
+        right: 0;
+        height: 130%;
+        background: #314535;
     }
 }
 
-@media screen and (max-height: 800px) {
+@media screen and (max-width: 500px) {
     .map{
-        margin-top: 300px;
-    }
-}
-
-@media screen and (max-height: 500px) {
-    .map{
-        margin-top: 400px;
+        flex-direction: column;
+        position: relative;
+        right: 0;
+        height: 130%;
+        background: #314535;
     }
 }
 

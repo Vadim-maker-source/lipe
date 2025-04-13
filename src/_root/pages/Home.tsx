@@ -3,12 +3,26 @@ import { useEffect, useState } from 'react';
 
 const Home = () => {
   const images = [
-    "/assets/rec1.png",
-    "/assets/rec2.png",
-    "/assets/rec3.png",
-    "/assets/rec4.png",
-    "/assets/rec5.png",
-    "/assets/rec6.png",
+    {
+      id: 1,
+      link: 'https://будьвдвижении.рф/',
+      image: '/assets/rec10.png'
+    },
+    {
+      id: 2,
+      link: 'https://sport-music.ru/',
+      image: '/assets/rec20.png'
+    },
+    {
+      id: 3,
+      link: 'https://edu.sirius.online/#/',
+      image: '/assets/rec30.png'
+    },
+    {
+      id: 4,
+      link: 'https://www.kvantorium48.ru/node/1648',
+      image: '/assets/rec40.png'
+    },
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -119,8 +133,7 @@ const Home = () => {
             </Link>
           </div>
         </div>
-        <div className="about-lip">
-          <p>
+          <p className="about-lip">
             Липецк находится примерно в 370 км на юг от Москвы, на пути к черноморским курортам, в живописной русской провинции.
             Его протяженность составляет 200 км с севера на юг и 150 км с запада на восток.
             Липецкая область — регион с богатой историей и культурой, отражающей многие черты центральной России.
@@ -128,7 +141,6 @@ const Home = () => {
             <br />
             <span style={{ fontWeight: 'bolder', color: 'orange' }}>&larr; Кликните на название любой области кроме Липецка</span>
           </p>
-        </div>
       </div>
       <br />
       <br />
@@ -138,11 +150,13 @@ const Home = () => {
           <button className="scroll-arrow left" onClick={prevImage}>
             &#8592;
           </button>
-          <img
-            src={images[currentImageIndex]}
-            alt={`Recommendation ${currentImageIndex + 1}`}
-            className="slider-image"
-          />
+          <Link to={images[currentImageIndex].link} target="_blank">
+            <img
+              src={images[currentImageIndex].image}
+              alt={`Recommendation ${currentImageIndex + 1}`}
+              className="slider-image"
+            />
+          </Link>
           <button className="scroll-arrow right" onClick={nextImage}>
             &#8594;
           </button>

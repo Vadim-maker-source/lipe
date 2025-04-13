@@ -42,7 +42,11 @@ const Help = () => {
         setUser(user as User); // Приводим тип к User
       } catch (error) {
         setUser(null);
-        navigate('/sign-in'); // Перенаправляем на страницу входа, если пользователь не авторизован
+        if(confirm('Чтобы отправить письмо в поддержку, нужно войти в аккаунт. Перевести на страницу со входом?')){
+          navigate('/sign-in');
+        }else{
+          navigate('/')
+        }
       }
     };
 

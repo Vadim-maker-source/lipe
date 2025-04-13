@@ -8,7 +8,6 @@ interface TopbarProps {
   setSearchQuery: (query: string) => void;
 }
 
-// Тип для пользователя
 interface User {
   $id: string;
   name: string;
@@ -17,15 +16,14 @@ interface User {
 
 const Topbar: React.FC<TopbarProps> = ({ searchQuery, setSearchQuery }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null); // Типизация пользователя
+  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
-  // Проверка авторизации пользователя
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const user = await account.get();
-        setUser(user as User); // Приводим тип к User
+        setUser(user as User);
       } catch (error) {
         setUser(null);
       }
@@ -44,7 +42,6 @@ const Topbar: React.FC<TopbarProps> = ({ searchQuery, setSearchQuery }) => {
     }
   };
 
-  // Обработка изменения поискового запроса
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
     setIsModalOpen(!!e.target.value);
@@ -114,7 +111,6 @@ const Topbar: React.FC<TopbarProps> = ({ searchQuery, setSearchQuery }) => {
         </div>
       </div>
 
-      {/* Модальное окно поиска */}
       {isModalOpen && (
         <div className="search-modal">
           <div className="search-modal-content">
