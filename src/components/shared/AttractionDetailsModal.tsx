@@ -23,6 +23,7 @@ const AttractionDetailsPage: React.FC = () => {
   const [otzivi, setOtzivi] = useState<Otziv[]>([]);
   const [newOtziv, setNewOtziv] = useState<Otziv & { imageFile?: File }>({
     attractionId: id || '',
+    userId: user?.$id,
     username: '',
     text: '',
     rating: 5,
@@ -57,6 +58,7 @@ const AttractionDetailsPage: React.FC = () => {
         id: doc.$id,
         attractionId: doc.attractionId,
         username: doc.username,
+        userId: doc.userId,
         text: doc.text,
         rating: doc.rating,
         imageUrl: doc.imageUrl,

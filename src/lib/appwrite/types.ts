@@ -7,7 +7,7 @@ export interface User {
 }
   
 export interface Otziv {
-    $id: string;
+    id?: string;
     attractionId: string;
     userId?: string;
     username: string;

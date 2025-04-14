@@ -72,7 +72,6 @@ export const addOtziv = async (otziv: Otziv) => {
       appwriteConfig.otziviCollectionId,
       ID.unique(),
       {
-        $id: otziv.$id,
         attractionId: otziv.attractionId,
         userId: otziv.userId,
         username: otziv.username,
