@@ -541,15 +541,12 @@ li img{
 }
 
 .about-lip{
-    width: 540px;
-    color: #fff;
-    margin-left: -900px;
-}
-
-.about-lip p{
   line-height: 40px;
   letter-spacing: 2px;
   font-weight: bold;
+  width: 540px;
+  color: #fff;
+  margin-left: -900px;
 }
 
 .town-list{
