@@ -70,8 +70,9 @@ export const addOtziv = async (otziv: Otziv) => {
     const response = await databases.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.otziviCollectionId,
-      'unique()',
+      ID.unique(),
       {
+        $id: otziv.$id,
         attractionId: otziv.attractionId,
         userId: otziv.userId,
         username: otziv.username,
