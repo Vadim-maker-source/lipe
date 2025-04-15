@@ -951,6 +951,7 @@ li img{
     position: relative;
     text-align: center;
     margin: 20px 0;
+    margin-bottom: 50px;
   }
   
   .recommend h2.rec {
@@ -1480,4 +1481,33 @@ li img{
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.push-card-container{
+    background: #14A64C;
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.push-card-container button{
+    padding: 30px 40px;
+    border-radius: 20px;
+    border: 2px solid #155724;
+    background: #314535;
+    color: #14A64C;
+    font-size: 20px;
+}
+
+.push-card-container span{
+    font-size: 20px;
+    color: #fff;
+}
+
+.push-card-container img{
+    width: 20%;
+    height: 80%;
 }

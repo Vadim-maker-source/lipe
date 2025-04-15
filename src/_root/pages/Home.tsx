@@ -43,7 +43,7 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       nextImage();
-    }, 5000);
+    }, 7000);
 
     return () => clearInterval(interval);
   }, [currentImageIndex]);
@@ -161,6 +161,11 @@ const Home = () => {
             &#8594;
           </button>
         </div>
+      </div>
+      <div className="push-card-container">
+        <a href="https://culture.gosuslugi.ru/" target="_blank"><button>Оформить</button></a>
+        <span>Оформить пушкинскую карту</span>
+        <img src="/assets/pushk-card2.png" alt="" />
       </div>
     </div>
   );
