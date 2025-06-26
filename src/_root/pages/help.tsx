@@ -73,7 +73,7 @@ const Help = () => {
       };
   
       try {
-        const response = await fetch('/api/index', {
+        const response = await fetch('/api/index/send-email', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

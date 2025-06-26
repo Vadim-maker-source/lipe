@@ -2,17 +2,18 @@ import express from 'express';
 import cors from 'cors';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
-import { createServer, IncomingMessage, ServerResponse } from 'http';
+import serverless from 'serverless-http';
 
 dotenv.config();
 
 const app = express();
 
-// Настройки CORS
-app.use(cors());
+app.use(cors({
+  origin: 'https://lipart.vercel.app',
+  credentials: true,
+}));
 app.use(express.json());
 
-// Preflight
 app.options('/send-email', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://lipart.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -21,11 +22,7 @@ app.options('/send-email', (req, res) => {
   res.status(200).end();
 });
 
-// Основной маршрут
 app.post('/send-email', async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://lipart.vercel.app');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-
   const { name, email, message } = req.body;
 
   const transporter = nodemailer.createTransport({
@@ -52,12 +49,8 @@ app.post('/send-email', async (req, res) => {
   }
 });
 
-// 📦 Экспорт хендлера для Vercel
-const server = createServer(app);
-
-export default function handler(req: IncomingMessage, res: ServerResponse) {
-  return server.emit('request', req, res);
-}
+// Экспортируем сервер как serverless функцию для Vercel
+export const handler = serverless(app);
 
 
 // Запуск сервера
