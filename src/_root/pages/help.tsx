@@ -73,7 +73,7 @@ const Help = () => {
       };
   
       try {
-        const response = await fetch('https://lipartbackend.vercel.app/send-email', {
+        const response = await fetch('/api/index', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
