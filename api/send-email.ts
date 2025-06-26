@@ -14,7 +14,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.options('/send-email', (req, res) => {
+app.options('/', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://lipart.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -22,7 +22,7 @@ app.options('/send-email', (req, res) => {
   res.status(200).end();
 });
 
-app.post('/send-email', async (req, res) => {
+app.post('/', async (req, res) => {
   const { name, email, message } = req.body;
 
   const transporter = nodemailer.createTransport({

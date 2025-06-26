@@ -67,13 +67,13 @@ const Help = () => {
     if (form.current) {
       const formData = new FormData(form.current);
       const data = {
-        name: user?.name || formData.get("user_email"),
+        name: user?.name || formData.get("name"),
         email: user?.email || formData.get("email"),
         message: formData.get("message"),
       };
   
       try {
-        const response = await fetch('/api/index', {
+        const response = await fetch('/api/send-email', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -127,11 +127,10 @@ const Help = () => {
         }
         <label className="label">Email</label>
         {user ? (
-        <textarea name="email" required className="textarea" value={user.email} style={{ willChange: 'none', resize: 'none', cursor: "revert" }}></textarea>
-        ) : (
-          <textarea name="user_email" required className="textarea"></textarea>
-        )
-        }
+  <textarea name="email" required value={user.email} />
+) : (
+  <textarea name="email" required className="textarea" />
+)}
         <label className="label">Сообщение</label>
         <textarea name="message" required className="textarea" placeholder='Пример: Я забыл свой пароль от аккаунта. Вам ответят в течение дня' />
         <input
