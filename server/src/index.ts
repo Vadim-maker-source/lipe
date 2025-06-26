@@ -16,6 +16,8 @@ app.use(cors({
 
 app.use(express.json());
 
+app.options('*', cors());
+
 // POST /send-email
 app.post('/send-email', async (req, res) => {
   const { name, email, message } = req.body;
