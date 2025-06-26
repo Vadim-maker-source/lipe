@@ -38,7 +38,7 @@ app.post('/', async (req, res) => {
   }
 });
 
-export default serverless(app);
+export const handler = serverless(app);
 
 
 
