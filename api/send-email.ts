@@ -49,7 +49,6 @@ app.post('/', async (req, res) => {
   }
 });
 
-// Экспортируем сервер как serverless функцию для Vercel
 export const handler = serverless(app);
 
 

@@ -76,9 +76,9 @@ const Help = () => {
         const response = await fetch('/api/send-email', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ path: '/send-email', ...data })
+          body: JSON.stringify(data), // data: { name, email, message }
         });
   
         if (response.ok) {
