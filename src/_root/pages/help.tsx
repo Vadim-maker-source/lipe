@@ -11,7 +11,6 @@ interface User {
 const Help = () => {
   const form = useRef<HTMLFormElement>(null);
   const [notification, setNotification] = useState<string | null>(null);
-  const [lastSentTime, setLastSentTime] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState<number>(0);
 
   const [user, setUser] = useState<User | null>(null);
@@ -91,7 +90,7 @@ const Help = () => {
           // setTimeLeft(24 * 60 * 60 * 1000);
         } else {
           const data = await response.json();
-          setNotification(`Ошибка: ${data.error}`);
+          setError(`Ошибка: ${data.error}`);
         }
       } catch (error) {
         console.error(error);
@@ -110,7 +109,7 @@ const Help = () => {
 
   return (
     <div className="container">
-      {error && <p>{error}</p>}
+      {error && <p>{notification}</p>}
       {/* {lastSentTime ? (
         <div>Вы уже отправили сообщение. Пожалуйста, подождите.</div>
       ) : (
