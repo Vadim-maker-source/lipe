@@ -4,13 +4,22 @@
     {
       "src": "api/send-email.ts",
       "use": "@vercel/node"
+    },
+    {
+      "src": "vite.config.ts",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
     }
   ],
   "routes": [
     {
       "src": "/api/send-email",
       "methods": ["POST"],
-      "dest": "api/send-email.ts"
+      "dest": "/api/send-email.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
