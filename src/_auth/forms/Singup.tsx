@@ -31,35 +31,33 @@ const Signup: React.FC = () => {
     setIsLoading(true);
     setError("");
     setNotification(null);
-
+  
     if (!user.email) {
       setError("Пожалуйста, введите email");
       setIsLoading(false);
       return;
     }
-
+  
     const code = generateVerificationCode();
     setVerificationCode(code);
     setIsCodeSent(true);
-
+  
     try {
-      const templateParams = {
-        to_email: user.email,
-        user_name: user.name,
-        verification_code: code
-      };
-
-      await emailjs.send(
-        'service_bm1zi3k', // Замените на ваш Service ID
-        'template_wu3prna', // Замените на ваш Template ID
-        templateParams,
-        'btSPvhQQNmoRrd_TS' // Замените на ваш Public Key
-      );
-
-      setNotification('Код подтверждения отправлен на вашу почту!');
+      const response = await fetch('/api/send-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: user.email, code }),
+      });
+  
+      if (response.ok) {
+        setNotification('Код подтверждения отправлен на вашу почту!');
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Ошибка при отправке кода');
+      }
     } catch (error) {
       console.error('Ошибка отправки кода:', error);
-    
+      setError('Ошибка отправки кода');
     } finally {
       setIsLoading(false);
     }

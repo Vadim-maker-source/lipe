@@ -6,10 +6,9 @@
       "outDir": "dist",
       "strict": true,
       "esModuleInterop": true,
-      "skipLibCheck": true,
-      "checkJs": true,         // 👈 включить проверку .js файлов
+      "skipLibCheck": true,         // 👈 включить проверку .js файлов
       "allowJs": true
     },
-    "include": ["send-email.js"]
+    "include": ["send-email.js", "send-verification.js"]
   }
   
