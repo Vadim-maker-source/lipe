@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../../lib/appwrite/api";
-import emailjs from 'emailjs-com';
 import type { User } from "../../lib/appwrite/types";
 
 const Signup: React.FC = () => {
