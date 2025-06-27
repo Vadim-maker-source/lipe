@@ -127,7 +127,7 @@ const Help = () => {
         }
         <label className="label">Email</label>
         {user ? (
-  <textarea name="email" required value={user.email} />
+  <textarea name="email" required value={user.email} className="textarea" />
 ) : (
   <textarea name="email" required className="textarea" />
 )}
