@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /attraction/
+Disallow: /api/
+
+Sitemap: https://lipart.vercel.app/sitemap.xml

@@ -2,17 +2,38 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/assets/minilogo.svg" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Title и Description -->
     <title>Культура Липецка | Липецк Арт</title>
-    <meta name="description" content="Липецк ART — это информационный портал, который знакомит пользователей с достопримечательностями Липецкой области. Сайт предоставляет подробную информацию о культурных и исторических памятниках региона, природных объектах и местах для туризма. Его цель — познакомить жителей и гостей Липецкой области с её богатым наследием, создать пространство для изучения и сохранения местных исторических ценностей. Сайт является не только путеводителем, но и источником вдохновения для путешественников и любителей истории, стремящихся открыть для себя красоты Липецкого края." />
-    <meta name="keywords" content="Липецк, Липецк Арт, культура, музеи, парки, храмы, достопримечательности" />
+    <meta name="description" content="Липецк ART — информационный портал о достопримечательностях Липецкой области: музеи, памятники, парки, храмы и туристические маршруты региона." />
+    <meta name="keywords" content="Липецк, Липецк Арт, культура, музеи, парки, храмы, достопримечательности, туризм, история" />
+    <meta name="author" content="Липецк Арт" />
 
-    <link rel="alternate" href="https://lipart.vercel.app/about" hreflang="ru" content="О нас" />
-    <link rel="alternate" href="https://lipart.vercel.app/sign-in" hreflang="ru" content="Войти" />
-    <link rel="alternate" href="https://lipart.vercel.app/support" hreflang="ru" content="Поддержка" />
+    <!-- Open Graph для соцсетей -->
+    <meta property="og:title" content="Культура Липецка | Липецк Арт" />
+    <meta property="og:description" content="Портал о культурном и историческом наследии Липецкой области." />
+    <meta property="og:url" content="https://lipart.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/minilogo.svg" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/minilogo.svg" type="image/svg+xml" />
+
+    <!-- Sitemap и robots.txt -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="robots" href="/robots.txt" />
+
+    <!-- Hreflang для мультиязычности (если нужно позже) -->
+    <link rel="alternate" href="https://lipart.vercel.app/about" hreflang="ru" />
+    <link rel="alternate" href="https://lipart.vercel.app/sign-in" hreflang="ru" />
+    <link rel="alternate" href="https://lipart.vercel.app/support" hreflang="ru" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://lipart.vercel.app/" />
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
