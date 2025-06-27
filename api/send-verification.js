@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 
   try {
     await transporter.sendMail({
-      from: process.env.GMAIL_USER,
+      from: 'support@lipart.ru',
       to: email,
       subject: 'Регистрация Липецк ART',
       text: `Ваш код подтверждения регистрации: ${code}`,
